@@ -96,7 +96,7 @@ function M.get_lines(flattened_outline_items)
   local hl_info = {}
 
   for node_line, node in ipairs(flattened_outline_items) do
-    local depth = node.depth
+    local depth = node.depth - 2
     local marker_space = (config.options.fold_markers and 1) or 0
 
     local line = t_utils.str_to_table(string.rep(' ', depth + marker_space))
@@ -116,7 +116,7 @@ function M.get_lines(flattened_outline_items)
       if config.options.show_guides then
         -- makes the guides
         if index == 1 then
-          line[index] = ' '
+          line[index] = ''
           -- i f index is last, add a bottom marker if current item is last,
           -- else add a middle marker
         elseif index == #line then
@@ -157,14 +157,14 @@ function M.get_lines(flattened_outline_items)
           add_guide_hl(
             running_length - 1 + 2 * marker_space,
             running_length
-              + vim.fn.strlen(ui.markers.vertical)
-              - 1
-              + 2 * marker_space
+            + vim.fn.strlen(ui.markers.vertical)
+            - 1
+            + 2 * marker_space
           )
         end
       end
 
-      line[index] = line[index] .. ' '
+      line[index] = line[index] .. ''
 
       running_length = running_length + vim.fn.strlen(line[index])
     end
